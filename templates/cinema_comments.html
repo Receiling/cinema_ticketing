@@ -1,0 +1,17 @@
+{% extends "cinema_base.html" %}
+{% load bootstrap3 %}
+{% block header %}
+<h2>用户评论</h2>
+{% endblock header %}
+{% block content %}
+    {% for comment in comments %}
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>用户：{{ comment.username }} | <span>评分：<b style="color: red">{{ comment.score }}</b></span></h4>
+    </div>
+    <div class="panel-body">
+        <P>{{ comment.comment }}</P>
+    </div>
+    </div> <!-- panel -->
+    {% endfor %}
+{% endblock content %}

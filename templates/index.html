@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block header %}
+<div class='jumbotron'>
+<h1>Start a great film travel...</h1>
+</div>
+{% endblock header %}
+{% block content %}
+<h2>
+<a href="{% url 'users:customer_register' %}">Register an account</a>
+Go to cinema, See some splendid films.
+</h2>
+<h2>
+Whenever you want to see a film, you can find a wonderful film here.
+</h2>
+{% endblock content %}

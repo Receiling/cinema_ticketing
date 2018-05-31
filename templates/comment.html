@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block header %}
+<h2>评论</h2>
+{% endblock header %}
+{% block content %}
+    {% if movie_comment %}
+    <form method="post" action="{% url 'ticketing:movie_comment' movie_id %}" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">发布</button>
+    {% endbuttons %}
+    </form>
+    {% endif %}
+    {% if cinema_comment %}
+    <form method="post" action="{% url 'ticketing:cinema_comment' cinema_id %}" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">发布</button>
+    {% endbuttons %}
+    </form>
+    {% endif %}
+{% endblock content %}

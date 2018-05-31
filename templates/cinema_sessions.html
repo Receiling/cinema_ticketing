@@ -1,0 +1,19 @@
+{% extends "cinema_base.html" %}
+{% load bootstrap3 %}
+{% block header %}
+<h2>场次信息<a href="{% url 'cinema_backend:arrange' %}" class="btn btn-primary btn-lg pull-right" role="button">新增场次</a></h2>
+{% endblock header %}
+{% block content %}
+    {% for session in sessions %}
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>{{ session.movie_name }}</h2>
+    </div>
+    <div class="panel-body">
+        <p>放映时间：{{ session.start_time|date:'Y年m月d日, H:i' }}</p>
+        <p>放映厅：{{ session.house_name }}</p>
+        <p>价格：{{ session.price }}</p>
+    </div>
+    </div> <!-- panel -->
+    {% endfor %}
+{% endblock content %}

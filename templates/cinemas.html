@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block header %}
+<h2>电影院</h2>
+{% endblock header %}
+
+{% block content %}
+{% for cinema_score in  cinema_scores %}
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3>
+    {{ cinema_score.name }}
+</h3>
+</div>
+<div class="panel-body">
+    <p>电话：{{ cinema_score.tel }}</p>
+    <p>地址：{{ cinema_score.address }}</p>
+    {% if cinema_score.score %}
+        <p>评分：{{ cinema_score.score }}</p>
+    {% else %}
+        <p>评分：暂时还没有评分</p>
+    {% endif %}
+    <p><a class="btn btn-primary btn-lg" href="{% url 'ticketing:cinema' cinema_score.cinema_id %}" role="button">选座购票</a></p>
+</div>
+</div> <!-- panel -->
+{% endfor %}
+{% endblock content %}

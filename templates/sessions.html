@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block header %}
+    <div class='jumbotron'>
+    {% if movie %}
+        <h2>{{ movie.name }}</h2>
+        <p>导演：{{ movie.director }}</p>
+        <p>类型：{{ movie.type }}</p>
+        <p>时长：{{ movie.length }}分钟</p>
+        {% if score %}
+        <p>评分：{{ score }}</p>
+        {% else %}
+            <p>评分：暂时还没有评分</p>
+        {% endif %}
+    {% endif %}
+    {% if cinema %}
+        <h2>{{ cinema.name }}</h2>
+        <p>电话：{{ cinema.tel }}</p>
+        <p>地址：{{ cinema.address }}</p>
+        {% if score %}
+        <p>评分：{{ score }}</p>
+        {% else %}
+            <p>评分：暂时还没有评分</p>
+        {% endif %}
+    {% endif %}
+    </div>
+{% endblock header %}
+
+{% block content %}
+    <h2>选座购票</h2>
+    {% for session in sessions %}
+    <div class="panel panel-default">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+        {% if movie %}
+            <P>电影院：{{ session.cinema_name }}</P>
+        {% endif %}
+        {% if cinema %}
+            <P>电影：{{ session.movie_name }}</P>
+        {% endif %}
+        <p>放映时间：{{ session.start_time|date:'Y年m月d日, H:i' }}</p>
+        <p>放映厅：{{ session.house_name }}</p>
+        <p>价格：{{ session.price }}</p>
+        <p><a class="btn btn-primary btn-lg" href="{% url 'ticketing:session' session.session_id %}" role="button">选座购票</a></p>
+    </div>
+    </div> <!-- panel -->
+    {% endfor %}
+    <hr>
+    <h2>评价</h2>
+    {% for comment in comments %}
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>用户：{{ comment.username }} | <span>评分：<b style="color: red">{{ comment.score }}</b></span></h4>
+    </div>
+    <div class="panel-body">
+        <P>{{ comment.comment }}</P>
+    </div>
+    </div> <!-- panel -->
+    {% endfor %}
+{% endblock content %}

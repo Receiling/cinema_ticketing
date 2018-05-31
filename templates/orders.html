@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block header %}
+{% endblock header %}
+{% block content %}
+    <style type="text/css">
+    #seats {
+        max-height: 150px;
+        overflow-y: auto;
+        overflow-x: auto;
+        width: auto;
+        display: block;
+        white-space:nowrap;//处理块元素中的空白符和换行符的，这个属性保证图片不换行
+    }
+    #seats li {
+        list-style: none;
+        float:left;
+        width:130px;
+        height:26px;
+        line-height:26px;
+        border:1px solid #d3d3d3;
+        background:#f7f7f7;
+        margin:6px;
+        font-size:14px;
+        font-weight:bold;
+        text-align:center
+    }
+    </style>
+
+    <h2>我的订单</h2>
+    {% for order in orders %}
+    <div class="panel panel-default">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+        <h2>电影：{{ order.movie_name }}</h2>
+        <p>影院：{{ order.cinema_name }}</p>
+        <p>放映厅：{{ order.house_name }}</p>
+        <p>放映时间：{{ order.start_time|date:'Y年m月d日, H:i' }}</p>
+        <p>价格：{{ order.price }}</p>
+        座位：
+        <ul id="seats">
+        {% for seat in order.seats %}
+            <li>{{ seat }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+        <a class="btn btn-primary btn-lg" href="#" role="button">去支付</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'ticketing:movie_comment' order.movie_id %}" role="button">电影评价</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'ticketing:cinema_comment' order.cinema_id %}" role="button">影院评价</a>
+    </div>
+    </div> <!-- panel -->
+    {% endfor %}
+{% endblock content %}

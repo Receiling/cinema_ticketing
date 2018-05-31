@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block header %}
+<h2>Register an account.</h2>
+{% endblock header %}
+{% block content %}
+    {% if form_invalid %}
+        <h3 style="color:red">用户已存在或注册信息填写有误，请重新填写</h3>
+    {% endif %}
+    <ul class="nav nav-tabs">
+      <li id="customer" role="presentation"><a href="{% url 'users:customer_register' %}">用户注册</a></li>
+      <li id="employee" role="presentation"><a href="{% url 'users:employee_register' %}">职工注册</a></li>
+    </ul>
+    {% if customer_register %}
+        <form method="post" action="{% url 'users:customer_register' %}" class="form">
+    {% endif %}
+    {% if employee_register %}
+        <form method="post" action="{% url 'users:employee_register' %}" class="form">
+    {% endif %}
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">注册</button>
+    {% endbuttons %}
+    <input type="hidden" name="next" value="{% url 'ticketing:index' %}" />
+    </form>
+    <script type="text/javascript">
+        {% if customer_register %}
+            document.getElementById("customer").setAttribute("class", "active");
+        {% endif %}
+        {% if employee_register %}
+            document.getElementById("employee").setAttribute("class", "active");
+        {% endif %}
+    </script>
+{% endblock content %}

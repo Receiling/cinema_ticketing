@@ -1,0 +1,18 @@
+{% extends "cinema_base.html" %}
+{% load bootstrap3 %}
+{% block header %}
+<h2>我的账户</h2>
+{% endblock header %}
+{% block content %}
+    {% if invalid_modify %}
+        <h3 style="color:red">用户名不可修改</h3>
+    {% endif %}
+    <form method="post" action="{% url 'users:user_info' %}" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">保存修改</button>
+    {% endbuttons %}
+    <input type="hidden" name="next" value="{% url 'users:user_info' %}" />
+    </form>
+{% endblock content %}

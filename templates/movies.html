@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block header %}
+<h2>电影</h2>
+{% endblock header %}
+
+{% block content %}
+{% for movie_score in  movie_scores %}
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3>
+    {{ movie_score.name }}
+</h3>
+</div>
+<div class="panel-body">
+    <p>导演：{{ movie_score.director }}</p>
+    <p>类型：{{ movie_score.type }}</p>
+    <p>时长：{{ movie_score.length }}分钟</p>
+    {% if movie_score.score %}
+        <p>评分：{{ movie_score.score }}</p>
+    {% else %}
+        <p>评分：暂时还没有评分</p>
+    {% endif %}
+    <p><a class="btn btn-primary btn-lg" href="{% url 'ticketing:movie' movie_score.movie_id %}" role="button">选座购票</a></p>
+</div>
+</div> <!-- panel -->
+{% endfor %}
+{% endblock content %}
