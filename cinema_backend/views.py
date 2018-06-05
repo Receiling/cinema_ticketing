@@ -83,8 +83,7 @@ def arrange(request):
 @login_required(login_url='/users/employee_login/')
 def comments(request):
     """用户评论"""
-    employee = Employee.object
-    s.get(username=request.user.get_username())
+    employee = Employee.objects.get(username=request.user.get_username())
     cinema = employee.cinema_id
     comments = Cinema_comment.objects.filter(cinema_id=cinema.cinema_id)
     context = {'comments': comments}

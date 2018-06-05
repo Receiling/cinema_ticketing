@@ -30,7 +30,7 @@ def customer_login(request):
         password = request.POST['password']
         customer = Customer.objects.filter(username=username, password=password)
         user = authenticate(username=username, password=password)
-        if customer is not None and user is not None and user.is_active:
+        if customer and user is not None and user.is_active:
             login(request, user)
             request.session['customer'] = True
             return HttpResponseRedirect(reverse('ticketing:index'))
