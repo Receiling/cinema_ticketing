@@ -266,7 +266,7 @@ def cinema_comment(request, cinema_id):
         form = CinemaCommentForm(data=request.POST)
         if form.is_valid():
             new_commment = form.save(commit=False)
-            new_commment.cinema_id = movie
+            new_commment.cinema_id = cinema
             new_commment.username = user
             new_commment.save()
             return HttpResponseRedirect(reverse('ticketing:orders'))
