@@ -18,7 +18,7 @@ class CustomerLoginForm(forms.ModelForm):
         model = Customer
         fields = ['username', 'password']
         labels = {'username': '用户名', 'password': '密码'}
-        widgets = {'email': forms.CharField(), 'password': forms.PasswordInput()}
+        widgets = {'password': forms.PasswordInput()}
 
 
 class EmployeeLoginForm(forms.ModelForm):
@@ -36,17 +36,23 @@ class EmployeeLoginForm(forms.ModelForm):
         model = Employee
         fields = ['username', 'password']
         labels = {'username': '用户名', 'password': '密码'}
-        widgets = {'email': forms.CharField(), 'password': forms.PasswordInput()}
+        widgets = {'password': forms.PasswordInput()}
 
 
 class EmployeeRegisterForm(forms.ModelForm):
     class Meta:
         model = Employee
-        exclude = ['']
+        fields = ['username', 'name', 'email', 'gender', 'age', 'password', 'cinema_id']
+        labels = {'username': '用户名', 'name': '姓名', 'email': '邮箱', 'gender': '性别',
+                  'age': '年龄', 'password': '密码', 'cinema_id': '影院'}
+        widgets = {'email': forms.EmailInput(), 'password': forms.PasswordInput()}
 
 
 class CustomerRegisterForm(forms.ModelForm):
     class Meta:
         model = Customer
-        exclude = ['']
+        fields = ['username', 'name', 'email', 'gender', 'age', 'password']
+        labels = {'username': '用户名', 'name': '姓名', 'email': '邮箱', 'gender': '性别',
+                  'age':'年龄', 'password': '密码'}
+        widgets = {'email': forms.EmailInput(), 'password': forms.PasswordInput()}
 
