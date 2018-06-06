@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.db.models import Avg
 
-from .models import Cinema, Movie, Session, House, House_all,Order, Customer, Employee, Cinema_comment, Movie_comment
+from .models import Cinema, Movie, Session, House, House_all, Order, Customer, Employee, Cinema_comment, Movie_comment
 from .forms import MovieCommentForm, CinemaCommentForm
 import time
 import json
@@ -214,6 +214,7 @@ def orders(request):
         house = session.house_id
         movie = session.movie_id
         cinema = house.cinema_id
+        order_info['order_id'] = distinct_time
         order_info['cinema_name'] = cinema.name
         order_info['cinema_id'] = cinema.cinema_id
         order_info['movie_name'] = movie.name
@@ -228,6 +229,13 @@ def orders(request):
         order_infos.append(order_info)
     context = {'orders': order_infos}
     return render(request, 'orders.html', context)
+
+@login_required(login_url='/users/customer_login/')
+def order(request, order_id):
+    """订单支付"""
+    username = request.user.get_username()
+    Order.objects.filter(username=username, time=order_id).update(status=1)
+    return HttpResponseRedirect(reverse('ticketing:orders'))
 
 
 @login_required(login_url='/users/customer_login/')
@@ -272,3 +280,4 @@ def cinema_comment(request, cinema_id):
             return HttpResponseRedirect(reverse('ticketing:orders'))
     context = {'form': form, 'cinema_id': cinema_id, 'movie_comment': False, 'cinema_comment': True}
     return render(request, 'comment.html', context)
+

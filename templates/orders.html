@@ -44,10 +44,17 @@
         {% endfor %}
         </ul>
         <br>
-        <a class="btn btn-primary btn-lg" href="#" role="button">去支付</a>
+        {% if order.status == 0 %}
+            <a id="afford" class="btn btn-primary btn-lg" href="{% url 'ticketing:order' order.order_id %}" role="button">去支付</a>
+        {% endif %}
         <a class="btn btn-primary btn-lg" href="{% url 'ticketing:movie_comment' order.movie_id %}" role="button">电影评价</a>
         <a class="btn btn-primary btn-lg" href="{% url 'ticketing:cinema_comment' order.cinema_id %}" role="button">影院评价</a>
     </div>
     </div> <!-- panel -->
     {% endfor %}
+    <script type="text/javascript">
+        $('#afford').click(function(){
+            alert("支付成功！");
+        })
+    </script>
 {% endblock content %}
