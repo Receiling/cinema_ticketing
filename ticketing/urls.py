@@ -22,6 +22,7 @@ urlpatterns = [
     # 用户订单页面
     url(r'^make_order/$', views.make_order, name='make_order'),
     url(r'^orders/$', views.orders, name='orders'),
+    url(r'^order/(?P<order_id>\d+)/$', views.order, name='order'),
 
     # 用户评价页面
     url(r'^movie_comment/(?P<movie_id>\d+)/$', views.movie_comment, name='movie_comment'),
