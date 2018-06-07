@@ -243,6 +243,12 @@ def movie_comment(request, movie_id):
     """对于编号为movie_id的电影的评价"""
     movie = Movie.objects.get(movie_id=movie_id)
     user = Customer.objects.get(username=request.user.get_username())
+    mcomment = Movie_comment.objects.filter(movie_id=movie_id, username=request.user.get_username())
+
+    if mcomment:
+        mcomment = Movie_comment.objects.get(movie_id=movie_id, username=request.user.get_username())
+        context = {'movie_comment': mcomment}
+        return render(request, 'comment_info.html', context)
 
     if request.method != 'POST':
         # 未提交数据：创建一个空表单
@@ -265,6 +271,12 @@ def cinema_comment(request, cinema_id):
     """对于编号为cinema_id的电影院的评价"""
     cinema = Cinema.objects.get(cinema_id=cinema_id)
     user = Customer.objects.get(username=request.user.get_username())
+    ccomment = Cinema_comment.objects.filter(cinema_id=cinema_id, username=request.user.get_username())
+
+    if ccomment:
+        ccomment = Cinema_comment.objects.get(cinema_id=cinema_id, username=request.user.get_username())
+        context = {'cinema_comment': ccomment}
+        return render(request, 'comment_info.html', context)
 
     if request.method != 'POST':
         # 未提交数据：创建一个空表单

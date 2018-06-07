@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block header %}
+<h2>我的评价</h2>
+{% endblock header %}
+{% block content %}
+    {% if movie_comment %}
+        <h3><strong>评分：</strong><span style="color: red;">{{ movie_comment.score }}</span></h3>
+        <br>
+        <h3><strong>评价：</strong><span>{{ movie_comment.comment }}</span></h3>
+    {% endif %}
+    {% if cinema_comment %}
+        <h3><strong>评分：</strong><span style="color: red;">{{ cinema_comment.score }}</span></h3>
+        <br>
+        <h3><strong>评价：</strong><span>{{ cinema_comment.comment }}</span></h3>
+    {% endif %}
+{% endblock content %}
