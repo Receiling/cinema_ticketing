@@ -35,7 +35,7 @@ def index(request):
 
 def movies(request):
     """显示所有的电影"""
-    Movies = Movie.objects.all()
+    Movies = Movie.objects.order_by('-score')
     movie_scores = []
     for movie in Movies:
         item = {}
@@ -67,7 +67,7 @@ def movie(request, movie_id):
                    "FROM ((ticketing_house join ticketing_session on ticketing_session.house_id_id = ticketing_house.house_id) "
                    "join ticketing_cinema on ticketing_house.cinema_id_id = ticketing_cinema.cinema_id) "
                    "join ticketing_movie on ticketing_session.movie_id_id = ticketing_movie.movie_id "
-                   "where ticketing_movie.movie_id = %s;", [movie_id])
+                   "where ticketing_movie.movie_id = %s order by start_time;", [movie_id])
     sessions = cursor.fetchall()
     Sessions = []
     for session in sessions:
@@ -95,7 +95,7 @@ def movie(request, movie_id):
 
 def cinemas(request):
     """显示所有的影院"""
-    Cinemas = Cinema.objects.all()
+    Cinemas = Cinema.objects.order_by('-score')
     cinema_scores = []
     for cinema in Cinemas:
         item = {}
@@ -122,7 +122,7 @@ def cinema(request, cinema_id):
                    "FROM ((ticketing_house join ticketing_session on ticketing_session.house_id_id = ticketing_house.house_id) "
                    "join ticketing_cinema on ticketing_house.cinema_id_id = ticketing_cinema.cinema_id) "
                    "join ticketing_movie on ticketing_session.movie_id_id = ticketing_movie.movie_id "
-                   "where ticketing_cinema.cinema_id = %s;", [cinema_id])
+                   "where ticketing_cinema.cinema_id = %s order by start_time;", [cinema_id])
     sessions = cursor.fetchall()
     Sessions = []
     for session in sessions:
@@ -152,6 +152,7 @@ def cinema(request, cinema_id):
 
 @login_required(login_url='/users/customer_login/')
 def session(request, session_id):
+    """显示具体的一个场次，用于在线选座"""
     sess = Session.objects.get(session_id=session_id)
     movie = sess.movie_id
     house = sess.house_id
