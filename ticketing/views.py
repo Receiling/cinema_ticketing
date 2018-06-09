@@ -99,7 +99,6 @@ def cinemas(request):
     cinema_scores = []
     for cinema in Cinemas:
         item = {}
-        item = {}
         item['cinema_id'] = cinema.cinema_id
         item['tel'] = cinema.tel
         item['name'] = cinema.name
@@ -117,6 +116,10 @@ def cinemas(request):
 def cinema(request, cinema_id):
     """显示影院对应的所有场次"""
     one_cinema = Cinema.objects.get(cinema_id=cinema_id)
+    comments = Cinema_comment.objects.filter(cinema_id=cinema_id)
+    score = False
+    if len(comments) > 0:
+        score = comments.aggregate(avg_score=Avg('score'))['avg_score']
     cursor = connection.cursor()
     cursor.execute("SELECT session_id, ticketing_cinema.name, ticketing_movie.name, house_name, start_time, price "
                    "FROM ((ticketing_house join ticketing_session on ticketing_session.house_id_id = ticketing_house.house_id) "
@@ -146,7 +149,7 @@ def cinema(request, cinema_id):
         com['comment'] = comment[1]
         com['score'] = comment[2]
         Comments.append(com)
-    context = {'sessions': Sessions, 'comments': Comments, 'cinema': one_cinema, 'movie': False}
+    context = {'sessions': Sessions, 'comments': Comments, 'cinema': one_cinema, 'score': score, 'movie': False}
     return render(request, 'sessions.html', context)
 
 
